@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-@CrossOrigin(origins = "*", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.OPTIONS})
+@CrossOrigin(origins = "http://localhost:5173", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.OPTIONS})
 @RestController
 @RequestMapping("/api/careers")
 public class CareerController {
@@ -32,6 +32,7 @@ public class CareerController {
     private final Map<String, VerificationEntry> verificationCodes = new HashMap<>();
     private static final long CODE_EXPIRY_MILLIS = 10 * 60 * 1000; // 10 minutes
 
+    // Static inner class
     private static class VerificationEntry {
         String code;
         long timestamp;
@@ -42,9 +43,9 @@ public class CareerController {
         }
     }
 
-    // Step 1: Submit application for email verification
+    // ✅ Single endpoint for both steps
     @PostMapping("/apply")
-    public ResponseEntity<?> applyForCareer(
+    public ResponseEntity<?> applyOrVerifyCareer(
             @RequestParam("role") String role,
             @RequestParam("firstName") String firstName,
             @RequestParam("lastName") String lastName,
@@ -52,11 +53,80 @@ public class CareerController {
             @RequestParam("phone") String phone,
             @RequestParam("qualification") String qualification,
             @RequestParam("passoutYear") int passoutYear,
-            @RequestParam("resume") MultipartFile resumeFile
+            @RequestParam(value = "resume", required = false) MultipartFile resumeFile,
+            @RequestParam(value = "code", required = false) String code
     ) {
         Map<String, Object> response = new HashMap<>();
+
         try {
-            // Validate PDF
+            // ✅ STEP 2: If code exists, verify and finalize
+            if (code != null && !code.isEmpty()) {
+                if (!verificationCodes.containsKey(email) || !pendingApplications.containsKey(email)) {
+                    response.put("status", "error");
+                    response.put("message", "No pending application found for this email.");
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+                }
+
+                VerificationEntry entry = verificationCodes.get(email);
+
+                // Expired
+                if (System.currentTimeMillis() - entry.timestamp > CODE_EXPIRY_MILLIS) {
+                    verificationCodes.remove(email);
+                    pendingApplications.remove(email);
+                    response.put("status", "error");
+                    response.put("message", "Verification code expired. Please submit your application again.");
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+                }
+
+                // Mismatch
+                if (!entry.code.equals(code)) {
+                    response.put("status", "error");
+                    response.put("message", "Invalid verification code.");
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+                }
+
+                CareerApplication app = pendingApplications.get(email);
+
+                if (careerRepository.existsByEmail(app.getEmail())) {
+                    response.put("status", "error");
+                    response.put("message", "This email has already been used to submit an application.");
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+                }
+
+                // Move resume to final folder
+                String finalDirPath = System.getProperty("user.dir") + "/uploads";
+                File finalDir = new File(finalDirPath);
+                if (!finalDir.exists()) finalDir.mkdirs();
+
+                File tempFile = new File(System.getProperty("user.dir") + "/uploads_temp/" + app.getResumeFileName());
+                File finalFile = new File(finalDir, app.getResumeFileName());
+                tempFile.renameTo(finalFile);
+
+                app.setAppliedAt(Instant.now());
+                CareerApplication savedApp = careerRepository.save(app);
+
+                pendingApplications.remove(email);
+                verificationCodes.remove(email);
+
+                // Confirmation + assessment emails
+                String subject = "Application Received - " + app.getRole();
+                String text = "Hello " + app.getFirstName() + ",\n\n" +
+                        "Your application has been successfully submitted.\n\nBest regards,\nHR Team";
+                emailService.sendApplicationMail(email, subject, text);
+
+                String assessmentSubject = "Assessment for " + app.getRole() + " Position";
+                String assessmentText = "Hello " + app.getFirstName() + ",\n\n" +
+                        "Please complete the assessment to proceed:\n" +
+                        "https://yourcompany.com/assessment?email=" + app.getEmail();
+                emailService.sendApplicationMail(app.getEmail(), assessmentSubject, assessmentText);
+
+                response.put("status", "success");
+                response.put("message", "Your Application Submitted Successfully. Check your email to start the assessment.");
+                response.put("id", savedApp.getId());
+                return ResponseEntity.ok(response);
+            }
+
+            // ✅ STEP 1: Apply & send verification email
             String originalFileName = resumeFile.getOriginalFilename();
             String contentType = resumeFile.getContentType();
             if (originalFileName == null ||
@@ -67,7 +137,7 @@ public class CareerController {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
             }
 
-            // Save resume temporarily
+            // Save temp resume
             String tempDirPath = System.getProperty("user.dir") + "/uploads_temp";
             File tempDir = new File(tempDirPath);
             if (!tempDir.exists()) tempDir.mkdirs();
@@ -76,7 +146,6 @@ public class CareerController {
             File tempFile = new File(tempDir, safeFileName);
             resumeFile.transferTo(tempFile);
 
-            // Create temporary application
             CareerApplication tempApp = new CareerApplication();
             tempApp.setRole(role);
             tempApp.setFirstName(firstName);
@@ -87,16 +156,14 @@ public class CareerController {
             tempApp.setPassoutYear(passoutYear);
             tempApp.setResumeFileName(safeFileName);
 
-            // Generate 6-digit verification code
-            String code = String.valueOf((int) (Math.random() * 900000) + 100000);
+            String verificationCode = String.valueOf((int) (Math.random() * 900000) + 100000);
             pendingApplications.put(email, tempApp);
-            verificationCodes.put(email, new VerificationEntry(code, System.currentTimeMillis()));
+            verificationCodes.put(email, new VerificationEntry(verificationCode, System.currentTimeMillis()));
 
-            // Send verification email
             String subject = "Verify your email for career application";
             String text = "Hello " + firstName + ",\n\n" +
-                    "Please verify your email by entering the following code:\n" +
-                    code + "\n\nThis code is valid for 10 minutes.\n\nHR Team";
+                    "Please verify your email by entering this code:\n\n" +
+                    verificationCode + "\n\nThis code is valid for 10 minutes.\n\nHR Team";
             emailService.sendApplicationMail(email, subject, text);
 
             response.put("status", "pending");
@@ -107,93 +174,10 @@ public class CareerController {
             response.put("status", "error");
             response.put("message", "File upload failed: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-        }
-    }
-
-    // Step 2: Verify code and finalize application
-    @PostMapping("/verify")
-    public ResponseEntity<?> verifyEmail(
-            @RequestParam("email") String email,
-            @RequestParam("code") String code
-    ) {
-        Map<String, Object> response = new HashMap<>();
-
-        if (!verificationCodes.containsKey(email) || !pendingApplications.containsKey(email)) {
-            response.put("status", "error");
-            response.put("message", "No pending application found for this email.");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-        }
-
-        VerificationEntry entry = verificationCodes.get(email);
-
-        // Check expiry
-        if (System.currentTimeMillis() - entry.timestamp > CODE_EXPIRY_MILLIS) {
-            verificationCodes.remove(email);
-            pendingApplications.remove(email);
-            response.put("status", "error");
-            response.put("message", "Verification code expired. Please submit your application again.");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-        }
-
-        // Check code match
-        if (!entry.code.equals(code)) {
-            response.put("status", "error");
-            response.put("message", "Invalid verification code.");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-        }
-
-        CareerApplication app = pendingApplications.get(email);
-
-        // Check if email already exists in DB
-        if (careerRepository.existsByEmail(app.getEmail())) {
-            response.put("status", "error");
-            response.put("message", "This email has already been used to submit an application.");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-        }
-
-        try {
-            // Move resume from temp to final folder
-            String finalDirPath = System.getProperty("user.dir") + "/uploads";
-            File finalDir = new File(finalDirPath);
-            if (!finalDir.exists()) finalDir.mkdirs();
-
-            File tempFile = new File(System.getProperty("user.dir") + "/uploads_temp/" + app.getResumeFileName());
-            File finalFile = new File(finalDir, app.getResumeFileName());
-            tempFile.renameTo(finalFile);
-
-            // Save to DB
-            app.setAppliedAt(Instant.now());
-            CareerApplication savedApp = careerRepository.save(app);
-
-            // Cleanup pending maps
-            pendingApplications.remove(email);
-            verificationCodes.remove(email);
-
-            // Send confirmation email
-            String subject = "Application Received - " + app.getRole();
-            String text = "Hello " + app.getFirstName() + ",\n\n" +
-                    "Your application has been successfully submitted.\n\nBest regards,\nHR Team";
-            emailService.sendApplicationMail(email, subject, text);
-
-            // Send assessment email
-            String assessmentSubject = "Assessment for " + app.getRole() + " Position";
-            String assessmentText = "Hello " + app.getFirstName() + ",\n\n" +
-                    "Congratulations! Please complete the assessment to proceed:\n" +
-                    "Assessment Link: https://yourcompany.com/assessment?email=" + app.getEmail() + "\n\nBest regards,\nHR Team";
-            emailService.sendApplicationMail(app.getEmail(), assessmentSubject, assessmentText);
-
-            // ✅ Modified message here 
-            
-            response.put("status", "success");
-            response.put("message", "Your Application Submitted Successfully. Check your email to start the assessment.");
-            response.put("id", savedApp.getId());
-            return ResponseEntity.ok(response);
-
         } catch (Exception e) {
             response.put("status", "error");
-            response.put("message", "Error submitting application: " + e.getMessage());
+            response.put("message", "Unexpected error: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
-}//end code
-
+}

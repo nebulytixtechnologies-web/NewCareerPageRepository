@@ -25,6 +25,7 @@ public class CareerApplication {
     private String email;
     private String phone;
     private String qualification;
+    //add experience for developers
     private int passoutYear;
     private String resumeFileName;
     private Instant appliedAt;
