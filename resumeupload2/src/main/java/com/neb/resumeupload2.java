@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class NebulytixCareersPageApplication {
+public class resumeupload2 {
 
 	public static void main(String[] args) {
-		SpringApplication.run(NebulytixCareersPageApplication.class, args);
+		SpringApplication.run(resumeupload2.class, args);
 	}
 
 }
