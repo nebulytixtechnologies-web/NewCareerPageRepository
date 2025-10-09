@@ -182,7 +182,7 @@ public class CareerController {
                     "Assessment Link: https://yourcompany.com/assessment?email=" + app.getEmail() + "\n\nBest regards,\nHR Team";
             emailService.sendApplicationMail(app.getEmail(), assessmentSubject, assessmentText);
 
-            // ✅ Modified message here
+            // ✅ Modified message here 
             
             response.put("status", "success");
             response.put("message", "Your Application Submitted Successfully. Check your email to start the assessment.");
@@ -195,5 +195,5 @@ public class CareerController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
-}//end of the code
+}//end of the code here
 
