@@ -183,6 +183,7 @@ public class CareerController {
             emailService.sendApplicationMail(app.getEmail(), assessmentSubject, assessmentText);
 
             // ✅ Modified message here
+            
             response.put("status", "success");
             response.put("message", "Your Application Submitted Successfully. Check your email to start the assessment.");
             response.put("id", savedApp.getId());
