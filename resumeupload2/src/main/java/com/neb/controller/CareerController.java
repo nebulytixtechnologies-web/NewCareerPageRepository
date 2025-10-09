@@ -195,5 +195,5 @@ public class CareerController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
-}//end code
+}//end codes
 
