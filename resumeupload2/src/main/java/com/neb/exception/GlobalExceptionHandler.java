@@ -1,17 +1,22 @@
 package com.neb.exception;
 
-import com.neb.dto.CareerApplicationResponseDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import com.neb.dto.CareerApplicationResponseDto;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(InvalidFileFormatException.class)
     public ResponseEntity<CareerApplicationResponseDto> handleInvalidFile(InvalidFileFormatException ex) {
+    	
+    
         CareerApplicationResponseDto resp = new CareerApplicationResponseDto(null, "error", ex.getMessage());
         return ResponseEntity.badRequest().body(resp);
+    	
     }
 
     @ExceptionHandler(FileStorageException.class)
