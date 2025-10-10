@@ -123,16 +123,125 @@ public class CareerService {
         pendingApplications.remove(email);
         verificationService.removeCode(email);
 
-        // Confirmation + assessment emails
-        emailService.sendApplicationMail(email, "Application Received - " + app.getRole(),
-                "Hello " + app.getFirstName() + ",\n\nYour application has been successfully submitted.\n\nHR Team");
+        // Send confirmation + assessment emails
+        String subject = "Application Received - " + app.getRole();
+        String text = "Hello " + app.getFirstName() + ",\n\n" +
+                "Your application has been successfully submitted.\n\nBest regards,\nHR Team";
+        emailService.sendApplicationMail(email, subject, text);
+          // Checking the role 
+         switch(app.getRole())
+        {
+        case "Intern":
+        {
+             //checking the domain for intern
+        	switch(app.getDomain())
+        	{
+        	    case "Java":
+        	    { 
+        	    	System.out.println(" ===>"+app.getDomain());
+                	 String assessmentSubject = "Assessment for " + app.getRole() + " Position";
+                     String assessmentText = "Hello " + app.getFirstName() + ",\n" +
+                             "Domain "+ app.getDomain() + ",\n"+
+                             "Role "+ app.getRole() + ",\n\n"+
+                             "Please complete the assessment:\n" +
+                             "https://yourcompany.com/assessment?email=" + app.getEmail() +app.getRole()+
+                             "\n\nBest regards,\nHR Team";
+                     emailService.sendApplicationMail(app.getEmail(), assessmentSubject, assessmentText);
+                 }
+        	     	
+        	    case "Python":
+        	    {
+        	    	 System.out.println(" ===>"+app.getDomain());
+                	 String assessmentSubject = "Assessment for " + app.getRole() + " Position";
+                     String assessmentText = "Hello " + app.getFirstName() + ",\n" +
+                             "Domain "+ app.getDomain() + ",\n"+
+                             "Role "+ app.getRole() + ",\n\n"+
+                             "Please complete the assessment:\n" +
+                             "https://yourcompany.com/assessment?email=" + app.getEmail() +app.getRole()+
+                             "\n\nBest regards,\nHR Team";
+                     emailService.sendApplicationMail(app.getEmail(), assessmentSubject, assessmentText);
+        	    }
+        	    
+        	    case ".NET":
+        	    {
+        	    	 System.out.println(" ===>"+app.getDomain());
+                	 String assessmentSubject = "Assessment for " + app.getRole() + " Position";
+                     String assessmentText = "Hello " + app.getFirstName() + ",\n" +
+                             "Domain "+ app.getDomain() + ",\n"+
+                             "Role "+ app.getRole() + ",\n\n"+
+                             "Please complete the assessment:\n" +
+                             "https://yourcompany.com/assessment?email=" + app.getEmail() +app.getRole()+
+                             "\n\nBest regards,\nHR Team";
+                     emailService.sendApplicationMail(app.getEmail(), assessmentSubject, assessmentText);
+        	    }
+        		
+        	}// end of switch case for domain
+        	
+        	
+        }// end of  case => intern for role
+        
+        case "Developer":
+        {
+        	  //checking the domain for developer
+        	switch(app.getDomain())
+        	{
+        	    case "Java":
+        	    { 
+        	    	System.out.println(" ===>"+app.getDomain());
+                	 String assessmentSubject = "Assessment for " + app.getRole() + " Position";
+                     String assessmentText = "Hello " + app.getFirstName() + ",\n" +
+                             "Domain "+ app.getDomain() + ",\n"+
+                             "Role "+ app.getRole() + ",\n\n"+
+                             "Please complete the assessment:\n" +
+                             "https://yourcompany.com/assessment?email=" + app.getEmail() +app.getRole()+
+                             "\n\nBest regards,\nHR Team";
+                     emailService.sendApplicationMail(app.getEmail(), assessmentSubject, assessmentText);
+                 }
+        	     	
+        	    case "Python":
+        	    {
+        	    	 System.out.println(" ===>"+app.getDomain());
+                	 String assessmentSubject = "Assessment for " + app.getRole() + " Position";
+                     String assessmentText = "Hello " + app.getFirstName() + ",\n" +
+                             "Domain "+ app.getDomain() + ",\n"+
+                             "Role "+ app.getRole() + ",\n\n"+
+                             "Please complete the assessment:\n" +
+                             "https://yourcompany.com/assessment?email=" + app.getEmail() +app.getRole()+
+                             "\n\nBest regards,\nHR Team";
+                     emailService.sendApplicationMail(app.getEmail(), assessmentSubject, assessmentText);
+        	    }
+        	    
+        	    case ".NET":
+        	    {
+        	    	 System.out.println(" ===>"+app.getDomain());
+                	 String assessmentSubject = "Assessment for " + app.getRole() + " Position";
+                     String assessmentText = "Hello " + app.getFirstName() + ",\n" +
+                             "Domain "+ app.getDomain() + ",\n"+
+                             "Role "+ app.getRole() + ",\n\n"+
+                             "Please complete the assessment:\n" +
+                             "https://yourcompany.com/assessment?email=" + app.getEmail() +app.getRole()+
+                             "\n\nBest regards,\nHR Team";
+                     emailService.sendApplicationMail(app.getEmail(), assessmentSubject, assessmentText);
+        	    }
+        		
+        	}// end of switch case for domain
+        } 
+        case "Cloud Engineer":
+        {
+        	System.out.println(" ===>"+app.getRole());
+            String assessmentSubject = "Assessment for " + app.getRole() + " Position";
+            String assessmentText = "Hello " + app.getFirstName() + ",\n" +
+                                   "Role "+ app.getRole() + ",\n\n"+
+                    "Please complete the assessment:\n" +
+                    "https://yourcompany.com/assessment?email=" + app.getEmail() + app.getRole()+
+                    "\n\nBest regards,\nHR Team";
+            emailService.sendApplicationMail(app.getEmail(), assessmentSubject, assessmentText);
+        }
+        }
 
-        emailService.sendApplicationMail(email, "Assessment for " + app.getRole(),
-                "Hello " + app.getFirstName() + ",\n\nPlease complete your assessment:\nhttps://yourcompany.com/assessment?email=" + email);
-
-        response.put("status", "success");
-        response.put("message", "Your application has been submitted successfully!");
-        response.put("id", savedApp.getId());
-        return ResponseEntity.ok(response);
+         
+         response.put("status", "success");
+         response.put("message", "Your Application Submitted Successfully. Check your email to start the assessment.");
+         return ResponseEntity.ok(response);
     }
 }
