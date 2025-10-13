@@ -1,14 +1,22 @@
 package com.neb.controller;
 
-import com.neb.dto.CareerApplicationRequest;
-import com.neb.service.CareerService;
-import com.neb.dto.DeveloperRequest;
-import com.neb.service.DeveloperService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.neb.dto.CareerApplicationRequest;
+import com.neb.dto.DeveloperRequest;
+import com.neb.service.CareerService;
+import com.neb.service.DeveloperService;
+import com.nit.dto.CloudDeveloperRequest;
+import com.nit.service.CloudDeveloperService;
+
 
 @CrossOrigin(origins = "http://localhost:5173")
 @RestController
@@ -17,6 +25,10 @@ public class CareerController {
 
     @Autowired
     private CareerService careerService;
+    @Autowired
+    private DeveloperService developerService;
+    @Autowired
+    private CloudDeveloperService cloudDeveloperService;
 
     @PostMapping("/apply")
     public ResponseEntity<?> applyOrVerifyCareer(
@@ -31,10 +43,6 @@ public class CareerController {
         }
     }
     
-    @Autowired
-    private DeveloperService developerService;
-
-    // Unified endpoint (apply or verify)
     @PostMapping("/applydeveloper")
     public ResponseEntity<?> applyOrVerifyDeveloper(
             @RequestParam(value = "role", required = false) String role,
@@ -56,4 +64,39 @@ public class CareerController {
                 qualification, passoutYear, internship, domain, companyName, salary, duration, resume, code);
         return developerService.handleDeveloperApplication(request);
     }
+    
+
+ // Unified endpoint for experienced Cloud Developers
+    @PostMapping("/applyclouddeveloper")
+    public ResponseEntity<?> applyOrVerifyCloudDeveloper(
+            @RequestParam(value = "role", required = false) String role,
+            @RequestParam(value = "firstName", required = false) String firstName,
+            @RequestParam(value = "lastName", required = false) String lastName,
+            @RequestParam(value = "email", required = false) String email,
+            @RequestParam(value = "phone", required = false) String phone,
+            @RequestParam(value = "qualification", required = false) String qualification,
+            @RequestParam(value = "passoutYear", required = false) Integer passoutYear,
+            @RequestParam(value = "experienceYears", required = false) Integer experienceYears,
+            @RequestParam(value = "domain", required = false) String domain,
+            @RequestParam(value = "companyName", required = false) String companyName,
+            @RequestParam(value = "currentSalary", required = false) Double currentSalary,
+            @RequestParam(value = "expectedSalary", required = false) Double expectedSalary,
+            @RequestParam(value = "durationAtCompany", required = false) Double durationAtCompany,
+            @RequestParam(value = "resume", required = false) MultipartFile resume,
+            @RequestParam(value = "linkedinProfile", required = false) String linkedinProfile,
+            @RequestParam(value = "githubProfile", required = false) String githubProfile,
+            @RequestParam(value = "code", required = false) String code,
+            @RequestParam(value = "gender", required = false) String gender
+            
+    ) {
+        CloudDeveloperRequest request = new CloudDeveloperRequest(
+                role, firstName, lastName, email, phone,
+                qualification, passoutYear, experienceYears, domain,
+                companyName, currentSalary, expectedSalary, durationAtCompany, resume,
+                linkedinProfile, githubProfile, code ,gender
+        );
+        return cloudDeveloperService.handleCloudDeveloperApplication(request);
+    }
+    
+   
 }

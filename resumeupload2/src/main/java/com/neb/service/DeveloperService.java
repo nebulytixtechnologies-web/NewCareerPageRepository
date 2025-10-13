@@ -6,6 +6,8 @@ import com.neb.dto.DeveloperRequest;
 import com.neb.entity.DeveloperApplication;
 import com.neb.repo.DeveloperRepository;
 import com.neb.util.VerificationManager;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -101,7 +103,7 @@ public class DeveloperService {
                 "Hello " + app.getFirstName() + ",\n\nPlease complete your assessment:\nhttps://yourcompany.com/assessment?email=" + app.getEmail());
 
         response.put("status", "success");
-        response.put("message", "Application submitted successfully!");
+        response.put("message", "Application submitted successfully! check your mail for the assessment");
         return ResponseEntity.ok(response);
     }
 

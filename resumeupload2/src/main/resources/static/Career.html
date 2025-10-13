@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -120,6 +119,15 @@
     <label>Phone No</label>
     <input type="tel" name="phone" required>
 
+    <!-- New Gender Field -->
+    <label>Gender</label>
+    <select name="gender" required>
+      <option value="">Select Gender</option>
+      <option value="Male">Male</option>
+      <option value="Female">Female</option>
+      <option value="Other">Other</option>
+    </select>
+
     <label>Qualification</label>
     <input type="text" name="qualification" required>
 
@@ -135,17 +143,7 @@
     <p id="errorMsg" class="error"></p>
   </form>
 
- <!--  Verification Form 
-  <form id="verifyForm">
-    <h3>Verify Your Email</h3>
-    <label>Enter Verification Code</label>
-    <input type="text" id="verificationCode" placeholder="6-digit code" required>
-    <button type="button" class="verify-btn">Verify</button>
-    <p id="verifySuccess" class="success"></p>
-    <p id="verifyError" class="error"></p>
-  </form>-->
-  
-  <!-- Verification Form -->
+  <!-- Verification Section -->
   <div id="verifySection">
     <form id="verifyForm">
       <h3>Verify Your Email</h3>
@@ -154,11 +152,9 @@
       <button type="button" class="verify-btn">Verify</button>
     </form>
 
-    <!--Keep messages outside the form -->
     <p id="verifySuccess" class="success"></p>
     <p id="verifyError" class="error"></p>
   </div>
-
 
   <script>
     let userEmail = "";
@@ -251,6 +247,3 @@
   </script>
 </body>
 </html>
-
-
-
