@@ -14,8 +14,8 @@ import com.neb.dto.CareerApplicationRequest;
 import com.neb.dto.DeveloperRequest;
 import com.neb.service.CareerService;
 import com.neb.service.DeveloperService;
-import com.nit.dto.CloudDeveloperRequest;
-import com.nit.service.CloudDeveloperService;
+import com.neb.dto.CloudDeveloperRequest;
+import com.neb.service.CloudDeveloperService;
 
 
 @CrossOrigin(origins = "http://localhost:5173")
