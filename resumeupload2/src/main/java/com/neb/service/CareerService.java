@@ -130,7 +130,8 @@ public class CareerService {
         String text = "Hello " + app.getFirstName() + ",\n\n" +
                 "Your application has been successfully submitted.\n\nBest regards,\nHR Team";
         emailService.sendApplicationMail(email, subject, text);
-          // Checking the role 
+          // Checking the role
+        //this part has to be changed
          switch(app.getRole())
         {
         case "Intern":

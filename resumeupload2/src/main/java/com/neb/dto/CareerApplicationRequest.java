@@ -20,5 +20,8 @@ public class CareerApplicationRequest {
     private String domain;
     private String gender;
 	    
+
+	
+    
 	
 }

@@ -33,7 +33,6 @@ public class CareerApplication {
     private String resumeFileName;
     private Instant appliedAt;
     private String gender;
-
-       
+   
 
   }
