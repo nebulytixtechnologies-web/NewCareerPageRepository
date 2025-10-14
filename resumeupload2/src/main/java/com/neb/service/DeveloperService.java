@@ -97,14 +97,57 @@ public class DeveloperService {
         emailService.sendApplicationMail(email,
                 "Application Received - " + app.getRole(),
                 "Hello " + app.getFirstName() + ",\n\nYour developer application has been successfully submitted.\n\nHR Team");
-
-        emailService.sendApplicationMail(email,
-                "Assessment for " + app.getRole() + " Developer",
-                "Hello " + app.getFirstName() + ",\n\nPlease complete your assessment:\nhttps://yourcompany.com/assessment?email=" + app.getEmail());
-
+        // checking of role
+        if(app.getRole().equalsIgnoreCase("developer"))
+        {
+           //checking the domain for developer
+    	switch(app.getDomain())
+    	{
+    	    case "Java":
+    	    { 
+    	    	System.out.println(" ===>"+app.getDomain());
+            	 String assessmentSubject = "Assessment for " + app.getRole() + " Position";
+                 String assessmentText = "Hello " + app.getFirstName() + ",\n" +
+                         "Domain "+ app.getDomain() + ",\n"+
+                         "Role "+ app.getRole() + ",\n\n"+
+                         "Please complete the assessment:\n" +
+                         "https://yourcompany.com/assessment?email=" + app.getEmail() +app.getRole()+
+                         "\n\nBest regards,\nHR Team";
+                 emailService.sendApplicationMail(app.getEmail(), assessmentSubject, assessmentText);
+             }
+    	     	
+    	    case "Python":
+    	    {
+    	    	 System.out.println(" ===>"+app.getDomain());
+            	 String assessmentSubject = "Assessment for " + app.getRole() + " Position";
+                 String assessmentText = "Hello " + app.getFirstName() + ",\n" +
+                         "Domain "+ app.getDomain() + ",\n"+
+                         "Role "+ app.getRole() + ",\n\n"+
+                         "Please complete the assessment:\n" +
+                         "https://yourcompany.com/assessment?email=" + app.getEmail() +app.getRole()+
+                         "\n\nBest regards,\nHR Team";
+                 emailService.sendApplicationMail(app.getEmail(), assessmentSubject, assessmentText);
+    	    }
+    	    
+    	    case ".NET":
+    	    {
+    	    	 System.out.println(" ===>"+app.getDomain());
+            	 String assessmentSubject = "Assessment for " + app.getRole() + " Position";
+                 String assessmentText = "Hello " + app.getFirstName() + ",\n" +
+                         "Domain "+ app.getDomain() + ",\n"+
+                         "Role "+ app.getRole() + ",\n\n"+
+                         "Please complete the assessment:\n" +
+                         "https://yourcompany.com/assessment?email=" + app.getEmail() +app.getRole()+
+                         "\n\nBest regards,\nHR Team";
+                 emailService.sendApplicationMail(app.getEmail(), assessmentSubject, assessmentText);
+    	    }
+    		
+    	 }// end of switch case for domain
+        }// end of if condition
         response.put("status", "success");
         response.put("message", "Application submitted successfully! check your mail for the assessment");
         return ResponseEntity.ok(response);
+        
     }
 
     private String saveTempResume(MultipartFile file) throws IOException {

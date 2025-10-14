@@ -130,9 +130,7 @@ public class CareerService {
                 "Your application has been successfully submitted.\n\nBest regards,\nHR Team";
         emailService.sendApplicationMail(email, subject, text);
           // Checking the role 
-         switch(app.getRole())
-        {
-        case "Intern":
+       if(app.getRole().equalsIgnoreCase("intern"))
         {
              //checking the domain for intern
         	switch(app.getDomain())
@@ -177,70 +175,8 @@ public class CareerService {
         	    }
         		
         	}// end of switch case for domain
-        	
-        	
-        }// end of  case => intern for role
-        
-        case "Developer":
-        {
-        	  //checking the domain for developer
-        	switch(app.getDomain())
-        	{
-        	    case "Java":
-        	    { 
-        	    	System.out.println(" ===>"+app.getDomain());
-                	 String assessmentSubject = "Assessment for " + app.getRole() + " Position";
-                     String assessmentText = "Hello " + app.getFirstName() + ",\n" +
-                             "Domain "+ app.getDomain() + ",\n"+
-                             "Role "+ app.getRole() + ",\n\n"+
-                             "Please complete the assessment:\n" +
-                             "https://yourcompany.com/assessment?email=" + app.getEmail() +app.getRole()+
-                             "\n\nBest regards,\nHR Team";
-                     emailService.sendApplicationMail(app.getEmail(), assessmentSubject, assessmentText);
-                 }
-        	     	
-        	    case "Python":
-        	    {
-        	    	 System.out.println(" ===>"+app.getDomain());
-                	 String assessmentSubject = "Assessment for " + app.getRole() + " Position";
-                     String assessmentText = "Hello " + app.getFirstName() + ",\n" +
-                             "Domain "+ app.getDomain() + ",\n"+
-                             "Role "+ app.getRole() + ",\n\n"+
-                             "Please complete the assessment:\n" +
-                             "https://yourcompany.com/assessment?email=" + app.getEmail() +app.getRole()+
-                             "\n\nBest regards,\nHR Team";
-                     emailService.sendApplicationMail(app.getEmail(), assessmentSubject, assessmentText);
-        	    }
-        	    
-        	    case ".NET":
-        	    {
-        	    	 System.out.println(" ===>"+app.getDomain());
-                	 String assessmentSubject = "Assessment for " + app.getRole() + " Position";
-                     String assessmentText = "Hello " + app.getFirstName() + ",\n" +
-                             "Domain "+ app.getDomain() + ",\n"+
-                             "Role "+ app.getRole() + ",\n\n"+
-                             "Please complete the assessment:\n" +
-                             "https://yourcompany.com/assessment?email=" + app.getEmail() +app.getRole()+
-                             "\n\nBest regards,\nHR Team";
-                     emailService.sendApplicationMail(app.getEmail(), assessmentSubject, assessmentText);
-        	    }
-        		
-        	}// end of switch case for domain
-        } 
-        case "Cloud Engineer":
-        {
-        	System.out.println(" ===>"+app.getRole());
-            String assessmentSubject = "Assessment for " + app.getRole() + " Position";
-            String assessmentText = "Hello " + app.getFirstName() + ",\n" +
-                                   "Role "+ app.getRole() + ",\n\n"+
-                    "Please complete the assessment:\n" +
-                    "https://yourcompany.com/assessment?email=" + app.getEmail() + app.getRole()+
-                    "\n\nBest regards,\nHR Team";
-            emailService.sendApplicationMail(app.getEmail(), assessmentSubject, assessmentText);
-        }
-        }
-
-         
+        }// end of  if condition
+                 
          response.put("status", "success");
          response.put("message", "Your Application Submitted Successfully. Check your email to start the assessment.");
          return ResponseEntity.ok(response);
