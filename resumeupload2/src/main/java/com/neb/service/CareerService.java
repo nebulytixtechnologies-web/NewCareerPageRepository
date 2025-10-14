@@ -67,6 +67,7 @@ public class CareerService {
             app.setPassoutYear(req.getPassoutYear());
             app.setResumeFileName(safeFileName);
             app.setDomain(req.getDomain());
+            app.setGender(req.getGender());
 
             pendingApplications.put(req.getEmail(), app);
 

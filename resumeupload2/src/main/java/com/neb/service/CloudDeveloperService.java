@@ -139,7 +139,6 @@ public class CloudDeveloperService {
         app.setEmail(req.getEmail());
         app.setPhone(req.getPhone());
         app.setQualification(req.getQualification());
-        app.setPassoutYear(req.getPassoutYear() != null ? req.getPassoutYear() : 0);
         app.setExperienceYears(req.getExperienceYears() != null ? req.getExperienceYears() : 0);
         app.setDomain(req.getDomain());
         app.setCompanyName(req.getCompanyName());
@@ -149,7 +148,6 @@ public class CloudDeveloperService {
         app.setResumePath(fileName);
         app.setLinkedinProfile(req.getLinkedinProfile());
         app.setGithubProfile(req.getGithubProfile());
-        app.setCode(req.getCode());
         app.setGender(req.getGender());
         return app;
     }

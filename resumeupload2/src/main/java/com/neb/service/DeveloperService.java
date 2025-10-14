@@ -142,6 +142,8 @@ public class DeveloperService {
         app.setSalary(isIntern ? (req.getSalary() != null ? req.getSalary() : 0) : 0);
         app.setDuration(isIntern ? (req.getDuration() != null ? req.getDuration() : 0) : 0);
         app.setResumePath(fileName);
+        app.setGender(req.getGender());
+        
         return app;
     }
 }

@@ -58,10 +58,11 @@ public class CareerController {
             @RequestParam(value = "salary", required = false) Double salary,
             @RequestParam(value = "duration", required = false) Double duration,
             @RequestParam(value = "resume", required = false) MultipartFile resume,
-            @RequestParam(value = "code", required = false) String code
+            @RequestParam(value = "code", required = false) String code,
+            @RequestParam(value = "gender",required = false) String gender
     ) {
         DeveloperRequest request = new DeveloperRequest(role, firstName, lastName, email, phone,
-                qualification, passoutYear, internship, domain, companyName, salary, duration, resume, code);
+                qualification, passoutYear, internship, domain, companyName, salary, duration, resume, code,gender);
         return developerService.handleDeveloperApplication(request);
     }
     
@@ -91,7 +92,7 @@ public class CareerController {
     ) {
         CloudDeveloperRequest request = new CloudDeveloperRequest(
                 role, firstName, lastName, email, phone,
-                qualification, passoutYear, experienceYears, domain,
+                qualification, experienceYears, domain,
                 companyName, currentSalary, expectedSalary, durationAtCompany, resume,
                 linkedinProfile, githubProfile, code ,gender
         );
