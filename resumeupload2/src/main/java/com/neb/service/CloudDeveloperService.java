@@ -103,10 +103,16 @@ public class CloudDeveloperService {
         emailService.sendApplicationMail(email,
                 "Application Received - " + app.getRole(),
                 "Hello " + app.getFirstName() + ",\n\nYour cloud developer application has been successfully submitted.\n\nHR Team");
-
-        emailService.sendApplicationMail(email,
-                "Assessment for " + app.getRole() + " Cloud Developer",
-                "Hello " + app.getFirstName() + ",\n\nPlease complete your assessment:\nhttps://yourcompany.com/assessment?email=" + app.getEmail());
+        // send mail for assessment 
+        System.out.println(" ===>"+app.getDomain());
+   	    String assessmentSubject = "Assessment for " + app.getRole() + " Position";
+        String assessmentText = "Hello " + app.getFirstName() + ",\n" +
+                "Domain "+ app.getDomain() + ",\n"+
+                "Role "+ app.getRole() + ",\n\n"+
+                "Please complete the assessment:\n" +
+                "https://www.hackerrank.com/test/8klibn6rbkb/a3a6de3b23b7b9bed5680f79be40ece4?try_test=true&email=hr%40nebulytixtechnologies.com"+
+                "\n\nBest regards,\nHR Team";
+        emailService.sendApplicationMail(app.getEmail(), assessmentSubject, assessmentText);
 
         response.put("status", "success");
         response.put("message", "Application submitted successfully!");

@@ -145,7 +145,7 @@ public class CareerService {
                              "Domain "+ app.getDomain() + ",\n"+
                              "Role "+ app.getRole() + ",\n\n"+
                              "Please complete the assessment:\n" +
-                             "https://yourcompany.com/assessment?email=" + app.getEmail() +app.getRole()+
+                             "https://www.hackerrank.com/test/dce0c7o3ks8/96b0bccd128199aa249a5d878252c7c8?try_test=true&email=hr%40nebulytixtechnologies.com"+
                              "\n\nBest regards,\nHR Team";
                      emailService.sendApplicationMail(app.getEmail(), assessmentSubject, assessmentText);
                  }
@@ -158,7 +158,7 @@ public class CareerService {
                              "Domain "+ app.getDomain() + ",\n"+
                              "Role "+ app.getRole() + ",\n\n"+
                              "Please complete the assessment:\n" +
-                             "https://yourcompany.com/assessment?email=" + app.getEmail() +app.getRole()+
+                             "https://www.hackerrank.com/test/dce0c7o3ks8/96b0bccd128199aa249a5d878252c7c8?try_test=true&email=hr%40nebulytixtechnologies.com"+
                              "\n\nBest regards,\nHR Team";
                      emailService.sendApplicationMail(app.getEmail(), assessmentSubject, assessmentText);
         	    }
@@ -171,7 +171,7 @@ public class CareerService {
                              "Domain "+ app.getDomain() + ",\n"+
                              "Role "+ app.getRole() + ",\n\n"+
                              "Please complete the assessment:\n" +
-                             "https://yourcompany.com/assessment?email=" + app.getEmail() +app.getRole()+
+                             "https://www.hackerrank.com/test/dce0c7o3ks8/96b0bccd128199aa249a5d878252c7c8?try_test=true&email=hr%40nebulytixtechnologies.com"+
                              "\n\nBest regards,\nHR Team";
                      emailService.sendApplicationMail(app.getEmail(), assessmentSubject, assessmentText);
         	    }

@@ -35,12 +35,12 @@ public class DeveloperService {
         Map<String, Object> response = new HashMap<>();
 
         try {
-            // ✅ VERIFY CODE PHASE
+            //  VERIFY CODE PHASE
             if (req.getCode() != null && req.getEmail() != null) {
                 return verifyDeveloper(req.getEmail(), req.getCode(), response);
             }
 
-            // ✅ APPLY PHASE
+            //  APPLY PHASE
             if (req.getEmail() == null || req.getResume() == null) {
                 response.put("status", "error");
                 response.put("message", "Email and resume are required.");
@@ -111,7 +111,7 @@ public class DeveloperService {
                          "Domain "+ app.getDomain() + ",\n"+
                          "Role "+ app.getRole() + ",\n\n"+
                          "Please complete the assessment:\n" +
-                         "https://yourcompany.com/assessment?email=" + app.getEmail() +app.getRole()+
+                         "https://www.hackerrank.com/test/9eht0gma42h/666cfbe6ce1da32d0c3cf7a5a4d22af1?try_test=true&email=hr%40nebulytixtechnologies.com"+
                          "\n\nBest regards,\nHR Team";
                  emailService.sendApplicationMail(app.getEmail(), assessmentSubject, assessmentText);
              }
@@ -124,7 +124,7 @@ public class DeveloperService {
                          "Domain "+ app.getDomain() + ",\n"+
                          "Role "+ app.getRole() + ",\n\n"+
                          "Please complete the assessment:\n" +
-                         "https://yourcompany.com/assessment?email=" + app.getEmail() +app.getRole()+
+                         "https://www.hackerrank.com/test/9eht0gma42h/666cfbe6ce1da32d0c3cf7a5a4d22af1?try_test=true&email=hr%40nebulytixtechnologies.com"+
                          "\n\nBest regards,\nHR Team";
                  emailService.sendApplicationMail(app.getEmail(), assessmentSubject, assessmentText);
     	    }
@@ -137,7 +137,7 @@ public class DeveloperService {
                          "Domain "+ app.getDomain() + ",\n"+
                          "Role "+ app.getRole() + ",\n\n"+
                          "Please complete the assessment:\n" +
-                         "https://yourcompany.com/assessment?email=" + app.getEmail() +app.getRole()+
+                         "https://www.hackerrank.com/test/9eht0gma42h/666cfbe6ce1da32d0c3cf7a5a4d22af1?try_test=true&email=hr%40nebulytixtechnologies.com"+
                          "\n\nBest regards,\nHR Team";
                  emailService.sendApplicationMail(app.getEmail(), assessmentSubject, assessmentText);
     	    }
