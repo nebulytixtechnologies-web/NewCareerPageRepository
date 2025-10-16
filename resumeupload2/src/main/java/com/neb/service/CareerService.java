@@ -139,41 +139,59 @@ public class CareerService {
         	{
         	    case "Java":
         	    { 
-        	    	System.out.println(" ===>"+app.getDomain());
-                	 String assessmentSubject = "Assessment for " + app.getRole() + " Position";
-                     String assessmentText = "Hello " + app.getFirstName() + ",\n" +
-                             "Domain "+ app.getDomain() + ",\n"+
-                             "Role "+ app.getRole() + ",\n\n"+
-                             "Please complete the assessment:\n" +
-                             "https://www.hackerrank.com/test/dce0c7o3ks8/96b0bccd128199aa249a5d878252c7c8?try_test=true&email=hr%40nebulytixtechnologies.com"+
-                             "\n\nBest regards,\nHR Team";
-                     emailService.sendApplicationMail(app.getEmail(), assessmentSubject, assessmentText);
+        	    	System.out.println(" ===>" + app.getDomain());
+        	    	String assessmentSubject = "Assessment for " + app.getRole() + " Position";
+        	    	String assessmentText = "Hello " + app.getFirstName() + ",\n" +
+        	    	        "Domain " + app.getDomain() + ",\n" +
+        	    	        "Role " + app.getRole() + ",\n\n" +
+        	    	        "Thank you for your interest in Software Development Engineering Internship opportunities at Nebulytix technologies pvt ltd! We are excited to move you forward to the next step of the application process, the Online Assessment.\n\n" +
+        	    	        "Please complete the assessment:\n" +
+        	    	        "https://www.hackerrank.com/test/dce0c7o3ks8/96b0bccd128199aa249a5d878252c7c8?try_test=true&email=hr%40nebulytixtechnologies.com\n\n" +
+        	    	        "Once you are ready, set aside a block 1:45 hour of uninterrupted time to complete it in its entirety.\n\n" +
+        	    	        "For technical and online assessment support, please review the Preparation Guide for resources or contact your recruiting team for any questions.\n\n" +
+        	    	        "Thank you,\nNebulytix technologies pvt ltd Student Programs";
+
+        	    	emailService.sendApplicationMail(app.getEmail(), assessmentSubject, assessmentText);
+
+
+        	    	emailService.sendApplicationMail(app.getEmail(), assessmentSubject, assessmentText);
+
                  }
         	     	
         	    case "Python":
         	    {
-        	    	 System.out.println(" ===>"+app.getDomain());
-                	 String assessmentSubject = "Assessment for " + app.getRole() + " Position";
-                     String assessmentText = "Hello " + app.getFirstName() + ",\n" +
-                             "Domain "+ app.getDomain() + ",\n"+
-                             "Role "+ app.getRole() + ",\n\n"+
-                             "Please complete the assessment:\n" +
-                             "https://www.hackerrank.com/test/dce0c7o3ks8/96b0bccd128199aa249a5d878252c7c8?try_test=true&email=hr%40nebulytixtechnologies.com"+
-                             "\n\nBest regards,\nHR Team";
-                     emailService.sendApplicationMail(app.getEmail(), assessmentSubject, assessmentText);
+        	    	System.out.println(" ===>" + app.getDomain());
+        	    	String assessmentSubject = "Assessment for " + app.getRole() + " Position";
+        	    	String assessmentText = "Hello " + app.getFirstName() + ",\n" +
+        	    	        "Domain " + app.getDomain() + ",\n" +
+        	    	        "Role " + app.getRole() + ",\n\n" +
+        	    	        "Thank you for your interest in Software Development Engineering Internship opportunities at Nebulytix technologies pvt ltd! We are excited to move you forward to the next step of the application process, the Online Assessment.\n\n" +
+        	    	        "Please complete the assessment:\n" +
+        	    	        "https://www.hackerrank.com/test/dce0c7o3ks8/96b0bccd128199aa249a5d878252c7c8?try_test=true&email=hr%40nebulytixtechnologies.com\n\n" +
+        	    	        "Once you are ready, set aside a block of 1:45 hour of uninterrupted time to complete it in its entirety.\n\n" +
+        	    	        "For technical and online assessment support, please review the Preparation Guide for resources or contact your recruiting team for any questions.\n\n" +
+        	    	        "Thank you,\nNebulytix technologies pvt ltd Student Programs";
+
+        	    	emailService.sendApplicationMail(app.getEmail(), assessmentSubject, assessmentText);
+
         	    }
         	    
         	    case ".NET":
         	    {
-        	    	 System.out.println(" ===>"+app.getDomain());
-                	 String assessmentSubject = "Assessment for " + app.getRole() + " Position";
-                     String assessmentText = "Hello " + app.getFirstName() + ",\n" +
-                             "Domain "+ app.getDomain() + ",\n"+
-                             "Role "+ app.getRole() + ",\n\n"+
-                             "Please complete the assessment:\n" +
-                             "https://www.hackerrank.com/test/dce0c7o3ks8/96b0bccd128199aa249a5d878252c7c8?try_test=true&email=hr%40nebulytixtechnologies.com"+
-                             "\n\nBest regards,\nHR Team";
-                     emailService.sendApplicationMail(app.getEmail(), assessmentSubject, assessmentText);
+        	    	System.out.println(" ===>" + app.getDomain());
+        	    	String assessmentSubject = "Assessment for " + app.getRole() + " Position";
+        	    	String assessmentText = "Hello " + app.getFirstName() + ",\n" +
+        	    	        "Domain " + app.getDomain() + ",\n" +
+        	    	        "Role " + app.getRole() + ",\n\n" +
+        	    	        "Thank you for your interest in Software Development Engineering Internship opportunities at Nebulytix technologies pvt ltd! We are excited to move you forward to the next step of the application process, the Online Assessment.\n\n" +
+        	    	        "Please complete the assessment:\n" +
+        	    	        "https://www.hackerrank.com/test/dce0c7o3ks8/96b0bccd128199aa249a5d878252c7c8?try_test=true&email=hr%40nebulytixtechnologies.com\n\n" +
+        	    	        "Once you are ready, set aside a block of 1 :45 hour of uninterrupted time to complete it in its entirety.\n\n" +
+        	    	        "For technical and online assessment support, please review the Preparation Guide for resources or contact your recruiting team for any questions.\n\n" +
+        	    	        "Thank you,\nNebulytix technologies pvt ltd Student Programs";
+
+        	    	emailService.sendApplicationMail(app.getEmail(), assessmentSubject, assessmentText);
+
         	    }
         		
         	}// end of switch case for domain

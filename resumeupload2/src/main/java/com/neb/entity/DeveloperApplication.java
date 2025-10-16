@@ -27,6 +27,7 @@ public class DeveloperApplication {
     private boolean internship;
     private String domain;
     private String companyName;
+    private String devdomain;
     private double salary;
     private double duration;
     private String resumePath;

@@ -21,6 +21,7 @@ public class DeveloperRequest {
     private Integer passoutYear;
     private String internship;
     private String domain;
+    private String devdomain;
     private String companyName;
     private Double salary;
     private Double duration;

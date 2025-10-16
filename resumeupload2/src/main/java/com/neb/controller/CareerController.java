@@ -55,6 +55,7 @@ public class CareerController {
             @RequestParam(value = "internship", required = false) String internship,
             @RequestParam(value = "domain", required = false) String domain,
             @RequestParam(value = "companyName", required = false) String companyName,
+            @RequestParam(value ="devdomain",required = false)String devdomain,
             @RequestParam(value = "salary", required = false) Double salary,
             @RequestParam(value = "duration", required = false) Double duration,
             @RequestParam(value = "resume", required = false) MultipartFile resume,
@@ -62,7 +63,7 @@ public class CareerController {
             @RequestParam(value = "gender",required = false) String gender
     ) {
         DeveloperRequest request = new DeveloperRequest(role, firstName, lastName, email, phone,
-                qualification, passoutYear, internship, domain, companyName, salary, duration, resume, code,gender);
+                qualification, passoutYear, internship, domain,devdomain, companyName, salary, duration, resume, code,gender);
         return developerService.handleDeveloperApplication(request);
     }
     

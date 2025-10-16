@@ -101,7 +101,7 @@ public class DeveloperService {
         if(app.getRole().equalsIgnoreCase("developer"))
         {
            //checking the domain for developer
-    	switch(app.getDomain())
+    	switch(app.getDevdomain())
     	{
     	    case "Java":
     	    { 
@@ -177,7 +177,6 @@ public class DeveloperService {
         app.setPhone(req.getPhone());
         app.setQualification(req.getQualification());
         app.setPassoutYear(req.getPassoutYear() != null ? req.getPassoutYear() : 0);
-
         boolean isIntern = "on".equalsIgnoreCase(req.getInternship()) || "true".equalsIgnoreCase(req.getInternship());
         app.setInternship(isIntern);
         app.setDomain(isIntern ? req.getDomain() : "N/A");
@@ -186,6 +185,7 @@ public class DeveloperService {
         app.setDuration(isIntern ? (req.getDuration() != null ? req.getDuration() : 0) : 0);
         app.setResumePath(fileName);
         app.setGender(req.getGender());
+        app.setDevdomain(req.getDevdomain());
         
         return app;
     }
