@@ -105,14 +105,27 @@ public class CloudDeveloperService {
                 "Hello " + app.getFirstName() + ",\n\nYour cloud developer application has been successfully submitted.\n\nHR Team");
         // send mail for assessment 
         System.out.println(" ===>"+app.getDomain());
-   	    String assessmentSubject = "Assessment for " + app.getRole() + " Position";
-        String assessmentText = "Hello " + app.getFirstName() + ",\n" +
-                "Domain "+ app.getDomain() + ",\n"+
-                "Role "+ app.getRole() + ",\n\n"+
-                "Please complete the assessment:\n" +
-                "https://www.hackerrank.com/test/8klibn6rbkb/a3a6de3b23b7b9bed5680f79be40ece4?try_test=true&email=hr%40nebulytixtechnologies.com"+
-                "\n\nBest regards,\nHR Team";
+        String assessmentSubject = "Assessment for " + app.getRole() + " Position";
+
+        String assessmentText =
+                "Hello " + app.getFirstName() + ",\n\n" +
+                "Thank you for applying for the *" + app.getRole() + "* position in the *" + app.getDomain() + "* domain at Nebulytix Technologies.\n\n" +
+                "We appreciate your interest in joining our team! To proceed with your application, please complete the following technical assessment.\n\n" +
+                "🧠 This test helps us evaluate your problem-solving skills and technical expertise relevant to the position.\n\n" +
+                "👉 Click the link below to start your assessment:\n" +
+                "https://www.hackerrank.com/test/8klibn6rbkb/a3a6de3b23b7b9bed5680f79be40ece4?try_test=true&email=hr%40nebulytixtechnologies.com\n\n" +
+                "📌 *Important Notes:*\n" +
+                "• The link is valid for **48 hours** from the time of this email.\n" +
+                "• Please ensure a stable internet connection before starting.\n" +
+                "• Once completed, our HR team will review your results and contact you regarding the next steps.\n\n" +
+                "We wish you the best of luck with your assessment!\n\n" +
+                "Warm regards,\n" +
+                "HR Team\n" +
+                "Nebulytix Technologies";
+
         emailService.sendApplicationMail(app.getEmail(), assessmentSubject, assessmentText);
+
+
 
         response.put("status", "success");
         response.put("message", "Application submitted successfully!");
