@@ -105,7 +105,7 @@ public class CloudDeveloperService {
                 "Hello " + app.getFirstName() + ",\n\nYour cloud developer application has been successfully submitted.\n\nHR Team");
         // send mail for assessment 
         System.out.println(" ===>"+app.getDomain());
-        String assessmentSubject = "Assessment for " + app.getRole() + " Position";
+        String assessmentSubject = "NEBULYTIX | Assessment for " + app.getRole() + " Position";
 
         String assessmentText =
                 "Hello " + app.getFirstName() + ",\n\n" +
