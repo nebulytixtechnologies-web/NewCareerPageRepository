@@ -105,10 +105,10 @@ public class DeveloperService {
     	{
     	    case "Java":
     	    { 
-    	    	System.out.println(" ===>"+app.getDomain());
+    	    	System.out.println(" ===>"+app.getDevdomain());
             	 String assessmentSubject = "Assessment for " + app.getRole() + " Position";
                  String assessmentText = "Hello " + app.getFirstName() + ",\n" +
-                         "Domain "+ app.getDomain() + ",\n"+
+                         "Domain "+ app.getDevdomain() + ",\n"+
                          "Role "+ app.getRole() + ",\n\n"+
                          "Please complete the assessment:\n" +
                          "https://www.hackerrank.com/test/9eht0gma42h/666cfbe6ce1da32d0c3cf7a5a4d22af1?try_test=true&email=hr%40nebulytixtechnologies.com"+
@@ -118,10 +118,10 @@ public class DeveloperService {
     	     	
     	    case "Python":
     	    {
-    	    	 System.out.println(" ===>"+app.getDomain());
+    	    	 System.out.println(" ===>"+app.getDevdomain());
             	 String assessmentSubject = "Assessment for " + app.getRole() + " Position";
                  String assessmentText = "Hello " + app.getFirstName() + ",\n" +
-                         "Domain "+ app.getDomain() + ",\n"+
+                         "Domain "+ app.getDevdomain() + ",\n"+
                          "Role "+ app.getRole() + ",\n\n"+
                          "Please complete the assessment:\n" +
                          "https://www.hackerrank.com/test/9eht0gma42h/666cfbe6ce1da32d0c3cf7a5a4d22af1?try_test=true&email=hr%40nebulytixtechnologies.com"+
@@ -131,10 +131,10 @@ public class DeveloperService {
     	    
     	    case ".NET":
     	    {
-    	    	 System.out.println(" ===>"+app.getDomain());
+    	    	 System.out.println(" ===>"+app.getDevdomain());
             	 String assessmentSubject = "Assessment for " + app.getRole() + " Position";
                  String assessmentText = "Hello " + app.getFirstName() + ",\n" +
-                         "Domain "+ app.getDomain() + ",\n"+
+                         "Domain "+ app.getDevdomain() + ",\n"+
                          "Role "+ app.getRole() + ",\n\n"+
                          "Please complete the assessment:\n" +
                          "https://www.hackerrank.com/test/9eht0gma42h/666cfbe6ce1da32d0c3cf7a5a4d22af1?try_test=true&email=hr%40nebulytixtechnologies.com"+
