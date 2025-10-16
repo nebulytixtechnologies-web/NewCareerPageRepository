@@ -126,7 +126,7 @@ public class CareerService {
         verificationService.removeCode(email);
 
         // Send confirmation + assessment emails
-        String subject = "Application Received - " + app.getRole();
+        String subject = "NEBULYTIX | Java Intern Assessment";
         String text = "Hello " + app.getFirstName() + ",\n\n" +
                 "Your application has been successfully submitted.\n\nBest regards,\nHR Team";
         emailService.sendApplicationMail(email, subject, text);
@@ -140,7 +140,7 @@ public class CareerService {
         	    case "Java":
         	    { 
         	    	System.out.println(" ===>" + app.getDomain());
-        	    	String assessmentSubject = "Assessment for " + app.getRole() + " Position";
+        	    	String assessmentSubject = "NEBULYTIX | Python Intern Assessment";
         	    	String assessmentText = "Hello " + app.getFirstName() + ",\n" +
         	    	        "Domain " + app.getDomain() + ",\n" +
         	    	        "Role " + app.getRole() + ",\n\n" +
@@ -161,7 +161,7 @@ public class CareerService {
         	    case "Python":
         	    {
         	    	System.out.println(" ===>" + app.getDomain());
-        	    	String assessmentSubject = "Assessment for " + app.getRole() + " Position";
+        	    	String assessmentSubject = "NEBULYTIX | .NET Intern Assessment";
         	    	String assessmentText = "Hello " + app.getFirstName() + ",\n" +
         	    	        "Domain " + app.getDomain() + ",\n" +
         	    	        "Role " + app.getRole() + ",\n\n" +
