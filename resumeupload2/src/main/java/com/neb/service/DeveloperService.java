@@ -105,41 +105,69 @@ public class DeveloperService {
     	{
     	    case "Java":
     	    { 
+    	    	
+    	    	System.out.println(" ===>"+app.getDomain());
     	    	System.out.println(" ===>"+app.getDevdomain());
-            	 String assessmentSubject = "Assessment for " + app.getRole() + " Position";
-                 String assessmentText = "Hello " + app.getFirstName() + ",\n" +
-                         "Domain "+ app.getDevdomain() + ",\n"+
-                         "Role "+ app.getRole() + ",\n\n"+
-                         "Please complete the assessment:\n" +
-                         "https://www.hackerrank.com/test/9eht0gma42h/666cfbe6ce1da32d0c3cf7a5a4d22af1?try_test=true&email=hr%40nebulytixtechnologies.com"+
-                         "\n\nBest regards,\nHR Team";
+            	 String assessmentSubject = "NEBULYTIX | Java Developer Assessment";
+            	 String assessmentText = "Hi " + app.getFirstName() + ",\n\n" +
+            			    "Thanks for showing interest in the " + app.getRole() + " role at Nebulytix!\n" +
+            			    "We’re excited to move you to the next step — the Online Assessment.\n\n" +
+            			    "To move forward in the process, please complete the assessment within 5 days using the link below:\n\n" +
+            			    "https://www.hackerrank.com/test/9eht0gma42h/666cfbe6ce1da32d0c3cf7a5a4d22af1?try_test=true&email=careers@nebulytix.com\n\n" +
+            			    "Before you start, make sure you have 3–4 hours of quiet, uninterrupted time.\n" +
+            			    "Once started, you won’t be able to pause or restart the test — so get ready before you begin.\n\n" +
+            			    "If you face any technical issues, feel free to reach out to us at careers@nebulytix.com.\n\n" +
+            			    "Good luck — we can’t wait to see what you build!\n\n" +
+            			    "Cheers,\n" +
+            			    "Team Nebulytix\n" +
+            			    "www.nebulytixtechnologies.com";
+
                  emailService.sendApplicationMail(app.getEmail(), assessmentSubject, assessmentText);
+                 break;
              }
     	     	
     	    case "Python":
     	    {
-    	    	 System.out.println(" ===>"+app.getDevdomain());
-            	 String assessmentSubject = "Assessment for " + app.getRole() + " Position";
-                 String assessmentText = "Hello " + app.getFirstName() + ",\n" +
-                         "Domain "+ app.getDevdomain() + ",\n"+
-                         "Role "+ app.getRole() + ",\n\n"+
-                         "Please complete the assessment:\n" +
-                         "https://www.hackerrank.com/test/9eht0gma42h/666cfbe6ce1da32d0c3cf7a5a4d22af1?try_test=true&email=hr%40nebulytixtechnologies.com"+
-                         "\n\nBest regards,\nHR Team";
+    	    	System.out.println(" ===>"+app.getDomain());
+    	    	System.out.println(" ===>"+app.getDevdomain());
+            	 String assessmentSubject = "NEBULYTIX | Python Developer Assessment";
+            	 String assessmentText = "Hi " + app.getFirstName() + ",\n\n" +
+            			    "Thanks for showing interest in the " + app.getRole() + " role at Nebulytix!\n" +
+            			    "We’re excited to move you to the next step — the Online Assessment.\n\n" +
+            			    "To move forward in the process, please complete the assessment within 5 days using the link below:\n\n" +
+            			    "https://www.hackerrank.com/test/9eht0gma42h/666cfbe6ce1da32d0c3cf7a5a4d22af1?try_test=true&email=careers@nebulytix.com\n\n" +
+            			    "Before you start, make sure you have 3–4 hours of quiet, uninterrupted time.\n" +
+            			    "Once started, you won’t be able to pause or restart the test — so get ready before you begin.\n\n" +
+            			    "If you face any technical issues, feel free to reach out to us at careers@nebulytix.com.\n\n" +
+            			    "Good luck — we can’t wait to see what you build!\n\n" +
+            			    "Cheers,\n" +
+            			    "Team Nebulytix\n" +
+            			    "www.nebulytixtechnologies.com";
+
                  emailService.sendApplicationMail(app.getEmail(), assessmentSubject, assessmentText);
+                 break;
     	    }
     	    
     	    case ".NET":
     	    {
-    	    	 System.out.println(" ===>"+app.getDevdomain());
-            	 String assessmentSubject = "Assessment for " + app.getRole() + " Position";
-                 String assessmentText = "Hello " + app.getFirstName() + ",\n" +
-                         "Domain "+ app.getDevdomain() + ",\n"+
-                         "Role "+ app.getRole() + ",\n\n"+
-                         "Please complete the assessment:\n" +
-                         "https://www.hackerrank.com/test/9eht0gma42h/666cfbe6ce1da32d0c3cf7a5a4d22af1?try_test=true&email=hr%40nebulytixtechnologies.com"+
-                         "\n\nBest regards,\nHR Team";
+    	    	System.out.println(" ===>"+app.getDomain());
+    	    	System.out.println(" ===>"+app.getDevdomain());
+            	 String assessmentSubject = "NEBULYTIX | .NET Developer Assessment";
+            	 String assessmentText = "Hi " + app.getFirstName() + ",\n\n" +
+            			    "Thanks for showing interest in the " + app.getRole() + " role at Nebulytix!\n" +
+            			    "We’re excited to move you to the next step — the Online Assessment.\n\n" +
+            			    "To move forward in the process, please complete the assessment within 5 days using the link below:\n\n" +
+            			    "https://www.hackerrank.com/test/9eht0gma42h/666cfbe6ce1da32d0c3cf7a5a4d22af1?try_test=true&email=careers@nebulytix.com\n\n" +
+            			    "Before you start, make sure you have 3–4 hours of quiet, uninterrupted time.\n" +
+            			    "Once started, you won’t be able to pause or restart the test — so get ready before you begin.\n\n" +
+            			    "If you face any technical issues, feel free to reach out to us at careers@nebulytix.com.\n\n" +
+            			    "Good luck — we can’t wait to see what you build!\n\n" +
+            			    "Cheers,\n" +
+            			    "Team Nebulytix\n" +
+            			    "www.nebulytixtechnologies.com";
+
                  emailService.sendApplicationMail(app.getEmail(), assessmentSubject, assessmentText);
+                 break;
     	    }
     		
     	 }// end of switch case for domain
