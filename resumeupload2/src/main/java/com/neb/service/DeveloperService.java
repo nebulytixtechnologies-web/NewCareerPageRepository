@@ -112,9 +112,9 @@ public class DeveloperService {
             	 String assessmentText = "Hi " + app.getFirstName() + ",\n\n" +
             			    "Thanks for showing interest in the " + app.getRole() + " role at Nebulytix!\n" +
             			    "We’re excited to move you to the next step — the Online Assessment.\n\n" +
-            			    "To move forward in the process, please complete the assessment within 5 days using the link below:\n\n" +
+            			    "To move forward in the process, please complete the assessment within 1 days using the link below:\n\n" +
             			    "https://www.hackerrank.com/test/9eht0gma42h/666cfbe6ce1da32d0c3cf7a5a4d22af1?try_test=true&email=careers@nebulytix.com\n\n" +
-            			    "Before you start, make sure you have 3–4 hours of quiet, uninterrupted time.\n" +
+            			    "Before you start, make sure you have 2 hours of quiet, uninterrupted time.\n" +
             			    "Once started, you won’t be able to pause or restart the test — so get ready before you begin.\n\n" +
             			    "If you face any technical issues, feel free to reach out to us at careers@nebulytix.com.\n\n" +
             			    "Good luck — we can’t wait to see what you build!\n\n" +
@@ -134,9 +134,9 @@ public class DeveloperService {
             	 String assessmentText = "Hi " + app.getFirstName() + ",\n\n" +
             			    "Thanks for showing interest in the " + app.getRole() + " role at Nebulytix!\n" +
             			    "We’re excited to move you to the next step — the Online Assessment.\n\n" +
-            			    "To move forward in the process, please complete the assessment within 5 days using the link below:\n\n" +
+            			    "To move forward in the process, please complete the assessment within 1 day using the link below:\n\n" +
             			    "https://www.hackerrank.com/test/9eht0gma42h/666cfbe6ce1da32d0c3cf7a5a4d22af1?try_test=true&email=careers@nebulytix.com\n\n" +
-            			    "Before you start, make sure you have 3–4 hours of quiet, uninterrupted time.\n" +
+            			    "Before you start, make sure you have 2 hours of quiet, uninterrupted time.\n" +
             			    "Once started, you won’t be able to pause or restart the test — so get ready before you begin.\n\n" +
             			    "If you face any technical issues, feel free to reach out to us at careers@nebulytix.com.\n\n" +
             			    "Good luck — we can’t wait to see what you build!\n\n" +
@@ -156,9 +156,9 @@ public class DeveloperService {
             	 String assessmentText = "Hi " + app.getFirstName() + ",\n\n" +
             			    "Thanks for showing interest in the " + app.getRole() + " role at Nebulytix!\n" +
             			    "We’re excited to move you to the next step — the Online Assessment.\n\n" +
-            			    "To move forward in the process, please complete the assessment within 5 days using the link below:\n\n" +
+            			    "To move forward in the process, please complete the assessment within 1 day  using the link below:\n\n" +
             			    "https://www.hackerrank.com/test/9eht0gma42h/666cfbe6ce1da32d0c3cf7a5a4d22af1?try_test=true&email=careers@nebulytix.com\n\n" +
-            			    "Before you start, make sure you have 3–4 hours of quiet, uninterrupted time.\n" +
+            			    "Before you start, make sure you have 2 hours of quiet, uninterrupted time.\n" +
             			    "Once started, you won’t be able to pause or restart the test — so get ready before you begin.\n\n" +
             			    "If you face any technical issues, feel free to reach out to us at careers@nebulytix.com.\n\n" +
             			    "Good luck — we can’t wait to see what you build!\n\n" +

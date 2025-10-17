@@ -140,7 +140,7 @@ public class CareerService {
         	    case "Java":
         	    { 
         	    	System.out.println(" ===>" + app.getDomain());
-        	    	String assessmentSubject = "Assessment for " + app.getRole() + " Position";
+        	    	String assessmentSubject = "NEBULYTIX | Assessment for " + app.getRole() + " Position";
         	    	String assessmentText = "Hello " + app.getFirstName() + ",\n" +
         	    	        "Domain " + app.getDomain() + ",\n" +
         	    	        "Role " + app.getRole() + ",\n\n" +
@@ -161,7 +161,7 @@ public class CareerService {
         	    case "Python":
         	    {
         	    	System.out.println(" ===>" + app.getDomain());
-        	    	String assessmentSubject = "Assessment for " + app.getRole() + " Position";
+        	    	String assessmentSubject = "NEBULYTIX |Assessment for " + app.getRole() + " Position";
         	    	String assessmentText = "Hello " + app.getFirstName() + ",\n" +
         	    	        "Domain " + app.getDomain() + ",\n" +
         	    	        "Role " + app.getRole() + ",\n\n" +
@@ -179,7 +179,7 @@ public class CareerService {
         	    case ".NET":
         	    {
         	    	System.out.println(" ===>" + app.getDomain());
-        	    	String assessmentSubject = "Assessment for " + app.getRole() + " Position";
+        	    	String assessmentSubject = "NEBULYTIX |Assessment for " + app.getRole() + " Position";
         	    	String assessmentText = "Hello " + app.getFirstName() + ",\n" +
         	    	        "Domain " + app.getDomain() + ",\n" +
         	    	        "Role " + app.getRole() + ",\n\n" +
