@@ -1,7 +1,5 @@
 package com.neb.service;
 
-
-
 import com.neb.dto.DeveloperRequest;
 import com.neb.entity.DeveloperApplication;
 import com.neb.repo.DeveloperRepository;
@@ -106,7 +104,6 @@ public class DeveloperService {
     	    case "Java":
     	    { 
     	    	
-    	    	System.out.println(" ===>"+app.getDomain());
     	    	System.out.println(" ===>"+app.getDevdomain());
             	 String assessmentSubject = "NEBULYTIX | Java Developer Assessment";
             	 String assessmentText = "Hi " + app.getFirstName() + ",\n\n" +

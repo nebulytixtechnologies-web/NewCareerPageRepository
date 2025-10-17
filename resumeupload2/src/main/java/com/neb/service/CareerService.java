@@ -149,10 +149,7 @@ public class CareerService {
         	    	        "https://www.hackerrank.com/test/dce0c7o3ks8/96b0bccd128199aa249a5d878252c7c8?try_test=true&email=hr%40nebulytixtechnologies.com\n\n" +
         	    	        "Once you are ready, set aside a block 1:45 hour of uninterrupted time to complete it in its entirety.\n\n" +
         	    	        "For technical and online assessment support, please review the Preparation Guide for resources or contact your recruiting team for any questions.\n\n" +
-        	    	        "Thank you,\nNebulytix technologies pvt ltd Student Programs";
-
-        	    	emailService.sendApplicationMail(app.getEmail(), assessmentSubject, assessmentText);
-
+        	    	        "Thank you,\nNebulytix technologies pvt ltd";
 
         	    	emailService.sendApplicationMail(app.getEmail(), assessmentSubject, assessmentText);
 
