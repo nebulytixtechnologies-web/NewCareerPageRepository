@@ -126,7 +126,7 @@ public class CareerService {
         verificationService.removeCode(email);
 
         // Send confirmation + assessment emails
-        String subject = "Application Received - " + app.getRole();
+        String subject = "NEBULYTIX | Java Intern Assessment";
         String text = "Hello " + app.getFirstName() + ",\n\n" +
                 "Your application has been successfully submitted.\n\nBest regards,\nHR Team";
         emailService.sendApplicationMail(email, subject, text);
@@ -152,6 +152,7 @@ public class CareerService {
         	    	        "Thank you,\nNebulytix technologies pvt ltd";
 
         	    	emailService.sendApplicationMail(app.getEmail(), assessmentSubject, assessmentText);
+        	    	break;
 
                  }
         	     	
@@ -159,6 +160,7 @@ public class CareerService {
         	    {
         	    	System.out.println(" ===>" + app.getDomain());
         	    	String assessmentSubject = "NEBULYTIX |Assessment for " + app.getRole() + " Position";
+
         	    	String assessmentText = "Hello " + app.getFirstName() + ",\n" +
         	    	        "Domain " + app.getDomain() + ",\n" +
         	    	        "Role " + app.getRole() + ",\n\n" +
@@ -170,6 +172,7 @@ public class CareerService {
         	    	        "Thank you,\nNebulytix technologies pvt ltd Student Programs";
 
         	    	emailService.sendApplicationMail(app.getEmail(), assessmentSubject, assessmentText);
+        	    	break;
 
         	    }
         	    
@@ -188,7 +191,7 @@ public class CareerService {
         	    	        "Thank you,\nNebulytix technologies pvt ltd Student Programs";
 
         	    	emailService.sendApplicationMail(app.getEmail(), assessmentSubject, assessmentText);
-
+        	    	break;
         	    }
         		
         	}// end of switch case for domain
