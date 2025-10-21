@@ -5,13 +5,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * A simple DTO (Data Transfer Object) for sending responses 
+ * related to career applications.
+ */
 
 @Setter
 @Getter
 @NoArgsConstructor
 @Data
 public class CareerApplicationResponseDto {
-    public CareerApplicationResponseDto(Object object, String string, String message2) {
+	 /**
+     * Constructor to initialize the response with specific values.
+     */
+    public CareerApplicationResponseDto(Object object, String string, String message2) 
+    {
 		
 	}
 	private Long id;

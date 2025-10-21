@@ -7,11 +7,19 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import org.springframework.web.multipart.MultipartFile;
-
+/**
+ * Data Transfer Object (DTO) for handling developer job application submissions.
+ * 
+ * --This class captures applicant details such as personal info, education,
+ * internship, experience, and resume file for the developer position.--
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class DeveloperRequest {
+	/**
+	 * these are the form submission detail for developer 
+	 */
 	private String role;
     private String firstName;
     private String lastName;
