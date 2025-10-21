@@ -18,8 +18,15 @@ import com.neb.dto.CloudDeveloperRequest;
 import com.neb.service.CloudDeveloperService;
 
 /**
- * REST controller that handles career-related API requests, including applications
- * for general roles like intern, developers, and cloud developers.
+ * CareerController handles HTTP POST requests related to job applications.
+ * 
+ * It supports:
+ * - General career applications
+ * - Developer applications
+ * - Cloud developer applications
+ * 
+ * Each endpoint supports both submission and optional verification
+ * through a `code` parameter.
  */
 @CrossOrigin(origins = "http://localhost:5173")
 @RestController
