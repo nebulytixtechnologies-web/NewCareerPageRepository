@@ -6,13 +6,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.Instant;
-
+/**
+ * Entity class representing a developer's job application.
+ * Maps to a database table (name will default to 'developer_application' if not specified).
+ */
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class DeveloperApplication {
-
+	/** Primary key: auto-generated unique ID for each application. */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -33,8 +36,4 @@ public class DeveloperApplication {
     private String resumePath;
     private Instant createdAt;
     private String gender;
-	
-
-	
-    
 }

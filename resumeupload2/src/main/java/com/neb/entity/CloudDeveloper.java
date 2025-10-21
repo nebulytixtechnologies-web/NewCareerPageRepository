@@ -10,14 +10,17 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+/**
+ * Entity representing a cloud developer application record.
+ * Maps to the 'cloud_developers1' table in the database.
+ */
 @Entity
 @Table(name = "cloud_developers1")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class CloudDeveloper {
-
+	/** Primary key: unique ID for each application. */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

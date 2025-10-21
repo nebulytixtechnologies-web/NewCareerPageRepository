@@ -36,7 +36,4 @@ public class DeveloperRequest {
     private MultipartFile resume;
     private String code;
     private String gender;
-    	
-
-   	
-}
+ }
