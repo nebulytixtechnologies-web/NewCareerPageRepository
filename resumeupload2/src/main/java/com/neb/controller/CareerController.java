@@ -17,7 +17,10 @@ import com.neb.service.DeveloperService;
 import com.neb.dto.CloudDeveloperRequest;
 import com.neb.service.CloudDeveloperService;
 
-
+/**
+ * REST controller that handles career-related API requests, including applications
+ * for general roles like intern, developers, and cloud developers.
+ */
 @CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/api/careers")
@@ -29,20 +32,28 @@ public class CareerController {
     private DeveloperService developerService;
     @Autowired
     private CloudDeveloperService cloudDeveloperService;
+    
+    /**
+    *Post Mapping request for the Intern  role
+    */
 
     @PostMapping("/apply")
     public ResponseEntity<?> applyOrVerifyCareer(
             @ModelAttribute CareerApplicationRequest request,
             @RequestParam(value = "resume", required = false) MultipartFile resumeFile,
             @RequestParam(value = "code", required = false) String code) {
-
+      // If a verification code is present, verify the application
         if (code != null && !code.isEmpty()) {
             return careerService.verifyApplication(request.getEmail(), code);
         } else {
+     // Otherwise, proceed with submitting the application
             return careerService.submitApplication(request, resumeFile);
         }
     }
     
+    /**
+     *Post Mapping Request For The Developer role
+     */
     @PostMapping("/applydeveloper")
     public ResponseEntity<?> applyOrVerifyDeveloper(
             @RequestParam(value = "role", required = false) String role,
@@ -64,6 +75,7 @@ public class CareerController {
     ) {
         DeveloperRequest request = new DeveloperRequest(role, firstName, lastName, email, phone,
                 qualification, passoutYear, internship, domain,devdomain, companyName, salary, duration, resume, code,gender);
+        // Handle submission 
         return developerService.handleDeveloperApplication(request);
     }
     
@@ -91,12 +103,14 @@ public class CareerController {
             @RequestParam(value = "gender", required = false) String gender
             
     ) {
+    	// Build the CloudDeveloperRequest object from incoming parameters
         CloudDeveloperRequest request = new CloudDeveloperRequest(
                 role, firstName, lastName, email, phone,
                 qualification, experienceYears, domain,
                 companyName, currentSalary, expectedSalary, durationAtCompany, resume,
                 linkedinProfile, githubProfile, code ,gender
         );
+        // Handle submission 
         return cloudDeveloperService.handleCloudDeveloperApplication(request);
     }
     
