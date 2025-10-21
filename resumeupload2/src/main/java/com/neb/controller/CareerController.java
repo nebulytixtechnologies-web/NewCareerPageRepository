@@ -110,7 +110,7 @@ public class CareerController {
                 companyName, currentSalary, expectedSalary, durationAtCompany, resume,
                 linkedinProfile, githubProfile, code ,gender
         );
-        // Handle submission 
+        // Handle submissions
         return cloudDeveloperService.handleCloudDeveloperApplication(request);
     }
     
