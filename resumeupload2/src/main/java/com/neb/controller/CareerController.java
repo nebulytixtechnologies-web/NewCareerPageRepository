@@ -69,7 +69,7 @@ public class CareerController {
     
 
  // Unified endpoint for experienced Cloud Developers
-    @PostMapping("/applyclouddevelopers")
+    @PostMapping("/applyclouddeveloper")
     public ResponseEntity<?> applyOrVerifyCloudDeveloper(
             @RequestParam(value = "role", required = false) String role,
             @RequestParam(value = "firstName", required = false) String firstName,
