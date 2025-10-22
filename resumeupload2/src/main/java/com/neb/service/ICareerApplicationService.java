@@ -11,7 +11,7 @@ public interface ICareerApplicationService
      * Inserts a new career application into the database.
      *
      * @param app the application to insert
-     * @return the inserted CareerApplication with any generated values (e.g., ID)
+     * @return the inserted CareerApplication with any generated values.
      */
 	public CareerApplication insert(CareerApplication app);
 
