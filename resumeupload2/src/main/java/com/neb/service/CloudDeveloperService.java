@@ -18,6 +18,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+/**
+ * Service class to manage Cloud Developer job applications.
+ * --
+ * Handles new applications, temporary resume storage, email verification,
+ * and finalizing the application after successful verification.
+ * --
+ */
 @Service
 public class CloudDeveloperService {
 
@@ -29,18 +36,25 @@ public class CloudDeveloperService {
 
     @Autowired
     private CloudDeveloperVerificationManager cloudDeveloperVerificationManager;
+    
  
-    //Response Entity req
+    /**
+     * Handles the complete application process:
+     * - Resume and email validation
+     * - Temporary file saving
+     * - Code generation and email verification
+     * - Application finalization after code verification
+     */
     public ResponseEntity<?> handleCloudDeveloperApplication(CloudDeveloperRequest req) {
         Map<String, Object> response = new HashMap<>();
 
         try {
-            // ✅ VERIFY CODE PHASE
+            // STEP 1: VERIFICATION PHASE (email + code)
             if (req.getCode() != null && req.getEmail() != null) {
                 return verifyCloudDeveloper(req.getEmail(), req.getCode(), response);
             }
 
-            // ✅ APPLY PHASE
+            // STEP 2: APPLICATION PHASE (resume + email must be provided)
             if (req.getEmail() == null || req.getResume() == null) {
                 response.put("status", "error");
                 response.put("message", "Email and resume are required.");
@@ -49,10 +63,12 @@ public class CloudDeveloperService {
 
             // Save resume temporarily
             String safeFileName = saveTempResume(req.getResume());
+            
+            // Map request to entity and store as pending
             CloudDeveloper app = mapToEntity(req, safeFileName);
             cloudDeveloperVerificationManager.addPendingApplication(app);
 
-            // Send verification code
+            // Generate and send verification code
             String code = cloudDeveloperVerificationManager.generateCode(req.getEmail());
             emailService.sendApplicationMail(req.getEmail(),
                     "Verify Your Cloud Developer Application",
@@ -70,12 +86,18 @@ public class CloudDeveloperService {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
+    
+    /**
+     * Verifies the email and code, finalizes the application and sends confirmation emails.
+     *
+     * @param email    The applicant's email
+     * @param code     The verification code
+     * @param response Response map to return result
+     * @return ResponseEntity with status and message
+     */
 
     // responseEntity for verify mail
     private ResponseEntity<?> verifyCloudDeveloper(String email, String code, Map<String, Object> response) {
-    	
-      //  CloudDeveloper app = cloudDeveloperVerificationManager.verifyCloudDeveloperCode(email, code);
-    	
     	
     	CloudDeveloper app = cloudDeveloperVerificationManager.verifyCloudDeveloperCode(email, code);
 
@@ -94,16 +116,20 @@ public class CloudDeveloperService {
 
         // Move file from temp → uploads
         moveResumeToFinal(app.getResumePath());
-
+        
+        // Save finalized application
         app.setCreatedAt(Instant.now());
         repo.save(app);
+        
+        // Cleanup
         cloudDeveloperVerificationManager.clear(email);
 
-        // Send final confirmation
+        // Send confirmation email
         emailService.sendApplicationMail(email,
                 "Application Received - " + app.getRole(),
                 "Hello " + app.getFirstName() + ",\n\nYour cloud developer application has been successfully submitted.\n\nHR Team");
-        // send mail for assessment 
+      
+        // Send domain-specific assessment email
         System.out.println(" ===>"+app.getDomain());
         String assessmentSubject = "NEBULYTIX | Assessment for " + app.getRole() + " Position";
 
@@ -132,6 +158,13 @@ public class CloudDeveloperService {
         return ResponseEntity.ok(response);
     }
 
+    /**
+     * Saves the uploaded resume file to a temporary folder.
+     *
+     * @param file The uploaded file
+     * @return The safe file name generated
+     * @throws IOException if the file could not be saved
+     */
     private String saveTempResume(MultipartFile file) throws IOException {
         String tempDir = System.getProperty("user.dir") + "/uploads_temp";
         File dir = new File(tempDir);
@@ -142,14 +175,25 @@ public class CloudDeveloperService {
         file.transferTo(new File(dir, safeName));
         return safeName;
     }
-
+    
+    /**
+     * Moves resume from temporary folder to permanent folder.
+     * @param resumeName The file name of the resume
+     */
     private void moveResumeToFinal(String resumeName) {
         File tempFile = new File(System.getProperty("user.dir") + "/uploads_temp/" + resumeName);
         File finalDir = new File(System.getProperty("user.dir") + "/uploads");
         if (!finalDir.exists()) finalDir.mkdirs();
         tempFile.renameTo(new File(finalDir, resumeName));
     }
-
+     
+    /**
+     * Converts request DTO to CloudDeveloper entity.
+     *
+     * @param req      The request object
+     * @param fileName The saved resume filename
+     * @return A fully populated CloudDeveloper entity
+     */
     private CloudDeveloper mapToEntity(CloudDeveloperRequest req, String fileName) {
         CloudDeveloper app = new CloudDeveloper();
         app.setRole(req.getRole());

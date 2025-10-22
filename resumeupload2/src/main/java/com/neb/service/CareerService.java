@@ -15,7 +15,14 @@ import java.io.File;
 import java.io.IOException;
 import java.time.Instant;
 import java.util.*;
-
+/**
+ * Service class to handle career application submissions and verification.
+ * --
+ * Responsible for processing incoming applications, saving resumes temporarily,
+ * sending verification emails, verifying applicants, and moving applications
+ * to persistent storage.
+ * --
+ */
 @Service
 public class CareerService {
 
@@ -28,19 +35,30 @@ public class CareerService {
     @Autowired
     private VerificationService verificationService;
 
+    // Stores applications pending email verification, key by email
     private final Map<String, CareerApplication> pendingApplications = new HashMap<>();
-
+    
+    /**
+     * Handles submission of career application requests.
+     * Validates and temporarily saves the resume, stores pending application,
+     * generates and sends a verification code via email.
+     * -- Param 
+     * resumeFile the resume file uploaded by the applicant (must be PDF) 
+     * req the career application request DTO containing applicant details --
+     * 
+     */
     public ResponseEntity<?> submitApplication(CareerApplicationRequest req, MultipartFile resumeFile) {
         Map<String, Object> response = new HashMap<>();
 
         try {
+        	// Validate that a resume file is provided
             if (resumeFile == null || resumeFile.isEmpty()) {
                 response.put("status", "error");
                 response.put("message", "Resume file is required.");
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
             }
 
-            // Validate PDF
+            // Validate resume file type: only PDFs allowed
             String originalFileName = resumeFile.getOriginalFilename();
             if (originalFileName == null || !originalFileName.toLowerCase().endsWith(".pdf")) {
                 response.put("status", "error");
@@ -48,15 +66,20 @@ public class CareerService {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
             }
 
-            // Save temp resume
+            // Create temporary directory if not exists
             String tempDirPath = System.getProperty("user.dir") + "/uploads_temp";
             File tempDir = new File(tempDirPath);
             if (!tempDir.exists()) tempDir.mkdirs();
-
+           
+            
+            // Sanitize and generate a unique filename for saving
             String safeFileName = UUID.randomUUID() + "_" + originalFileName.replaceAll("[^a-zA-Z0-9\\.\\-_]", "_");
             File tempFile = new File(tempDir, safeFileName);
+            
+            // Save the uploaded file temporarily
             resumeFile.transferTo(tempFile);
 
+            // Save the uploaded file temporarily
             CareerApplication app = new CareerApplication();
             app.setRole(req.getRole());
             app.setFirstName(req.getFirstName());
@@ -68,10 +91,11 @@ public class CareerService {
             app.setResumeFileName(safeFileName);
             app.setDomain(req.getDomain());
             app.setGender(req.getGender());
-
+      
+            // Store in pendingApplications for later verification
             pendingApplications.put(req.getEmail(), app);
 
-            // Generate code
+            // Generate verification code and send via email
             String verificationCode = verificationService.generateCode(req.getEmail());
 
             // Send verification mail
@@ -91,16 +115,24 @@ public class CareerService {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
+    
+    /**
+     * Verifies the application by checking the email and verification code.
+     * If valid, saves the application permanently, moves resume file,
+     * sends confirmation and assessment emails based on role and domain.
+     */
 
     public ResponseEntity<?> verifyApplication(String email, String code) {
         Map<String, Object> response = new HashMap<>();
-
+            
+        // Check if there is a pending application for the email
         if (!pendingApplications.containsKey(email)) {
             response.put("status", "error");
             response.put("message", "No pending application found for this email.");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
-
+       
+        // Verify the provided code
         if (!verificationService.verifyCode(email, code)) {
             response.put("status", "error");
             response.put("message", "Invalid or expired verification code.");
@@ -108,20 +140,25 @@ public class CareerService {
         }
 
         CareerApplication app = pendingApplications.get(email);
+        
+        // Prevent duplicate applications for the same email
         if (careerRepository.existsByEmail(app.getEmail())) {
             response.put("status", "error");
             response.put("message", "This email has already been used to submit an application.");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
 
-        // Move file from temp to final folder
+         // Move resume file from temporary to final uploads directory
         File tempFile = new File(System.getProperty("user.dir") + "/uploads_temp/" + app.getResumeFileName());
         File finalDir = new File(System.getProperty("user.dir") + "/uploads");
         if (!finalDir.exists()) finalDir.mkdirs();
         tempFile.renameTo(new File(finalDir, app.getResumeFileName()));
 
+        // Set application submission time and save to database
         app.setAppliedAt(Instant.now());
         CareerApplication savedApp = careerRepository.save(app);
+        
+        // Cleanup
         pendingApplications.remove(email);
         verificationService.removeCode(email);
 
@@ -130,7 +167,8 @@ public class CareerService {
         String text = "Hello " + app.getFirstName() + ",\n\n" +
                 "Your application has been successfully submitted.\n\nBest regards,\nHR Team";
         emailService.sendApplicationMail(email, subject, text);
-          // Checking the role
+        
+       // If role is intern, send domain-specific assessment email
          if(app.getRole().equalsIgnoreCase("intern"))
         {
        
@@ -193,6 +231,10 @@ public class CareerService {
         	    	emailService.sendApplicationMail(app.getEmail(), assessmentSubject, assessmentText);
         	    	break;
         	    }
+        	    
+        	    default:
+                  // No assessment email for other domains
+                   break;
         		
         	}// end of switch case for domain
         	

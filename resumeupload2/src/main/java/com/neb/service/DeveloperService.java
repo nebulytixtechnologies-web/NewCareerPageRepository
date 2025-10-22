@@ -17,6 +17,11 @@ import java.io.IOException;
 import java.time.Instant;
 import java.util.*;
 
+/**
+ * Service to handle developer job applications.
+ * Supports application submission, resume upload, email verification,
+ * and dispatch of role/domain-specific assessments.
+ */
 @Service
 public class DeveloperService {
 
@@ -28,29 +33,39 @@ public class DeveloperService {
 
     @Autowired
     private VerificationManager verificationManager;
-
+    
+    /**
+     * Handles both phases of the developer application process:
+     * - Application submission
+     * - Code verification
+     *
+     * @param req DeveloperRequest DTO from client
+     * @return ResponseEntity with result status and message
+     */
     public ResponseEntity<?> handleDeveloperApplication(DeveloperRequest req) {
         Map<String, Object> response = new HashMap<>();
 
         try {
-            //  VERIFY CODE PHASE
+            // STEP 1: VERIFY CODE PHASE
             if (req.getCode() != null && req.getEmail() != null) {
                 return verifyDeveloper(req.getEmail(), req.getCode(), response);
             }
 
-            //  APPLY PHASE
+            // STEP 2: APPLY PHASE
             if (req.getEmail() == null || req.getResume() == null) {
                 response.put("status", "error");
                 response.put("message", "Email and resume are required.");
                 return ResponseEntity.badRequest().body(response);
             }
 
-            // Save resume temporarily
+            // Save resume to temp folder
             String safeFileName = saveTempResume(req.getResume());
+            
+            // Map to entity and save as pending
             DeveloperApplication app = mapToEntity(req, safeFileName);
             verificationManager.addPendingApplication(app);
 
-            // Send verification code
+            // Generate and send email verification code
             String code = verificationManager.generateCode(req.getEmail());
             emailService.sendApplicationMail(req.getEmail(),
                     "Verify Your Developer Application",
@@ -67,7 +82,15 @@ public class DeveloperService {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
-
+    
+    /**
+     * Verifies email/code and sends assessment link if successful.
+     *
+     * @param email    Applicant's email
+     * @param code     Verification code
+     * @param response Output response map
+     * @return ResponseEntity with result status and message
+     */
     private ResponseEntity<?> verifyDeveloper(String email, String code, Map<String, Object> response) {
         DeveloperApplication app = verificationManager.verifyCode(email, code);
 
@@ -84,14 +107,15 @@ public class DeveloperService {
             return ResponseEntity.badRequest().body(response);
         }
 
-        // Move file from temp → uploads
+        // Move resume from temp to uploads folder
         moveResumeToFinal(app.getResumePath());
-
+        
+        // Finalize and persist application
         app.setCreatedAt(Instant.now());
         repo.save(app);
         verificationManager.clear(email);
 
-        // Send final confirmation
+        // Send confirmation email
         emailService.sendApplicationMail(email,
                 "Application Received - " + app.getRole(),
                 "Hello " + app.getFirstName() + ",\n\nYour developer application has been successfully submitted.\n\nHR Team");
@@ -174,7 +198,14 @@ public class DeveloperService {
         return ResponseEntity.ok(response);
         
     }
-
+    
+    /**
+     * Saves the resume file to a temporary folder with a safe name.
+     *
+     * @param file Multipart resume file
+     * @return Safe file name for the saved resume
+     * @throws IOException if saving fails
+     */
     private String saveTempResume(MultipartFile file) throws IOException {
         String tempDir = System.getProperty("user.dir") + "/uploads_temp";
         File dir = new File(tempDir);
@@ -186,13 +217,25 @@ public class DeveloperService {
         return safeName;
     }
 
+    /**
+     * Moves resume from temporary to final uploads folder.
+     *
+     * @param resumeName The name of the resume file
+     */
     private void moveResumeToFinal(String resumeName) {
         File tempFile = new File(System.getProperty("user.dir") + "/uploads_temp/" + resumeName);
         File finalDir = new File(System.getProperty("user.dir") + "/uploads");
         if (!finalDir.exists()) finalDir.mkdirs();
         tempFile.renameTo(new File(finalDir, resumeName));
     }
-
+    
+    /**
+     * Maps a DeveloperRequest DTO to DeveloperApplication entity.
+     *
+     * @param req      Developer request
+     * @param fileName Resume file name
+     * @return DeveloperApplication entity
+     */
     private DeveloperApplication mapToEntity(DeveloperRequest req, String fileName) {
         DeveloperApplication app = new DeveloperApplication();
         app.setRole(req.getRole());
