@@ -17,17 +17,7 @@ import com.neb.service.DeveloperService;
 import com.neb.dto.CloudDeveloperRequest;
 import com.neb.service.CloudDeveloperService;
 
-/**
- * CareerController handles HTTP POST requests related to job applications.
- * 
- * It supports:
- * - General career applications
- * - Developer applications
- * - Cloud developer applications
- * 
- * Each endpoint supports both submission and optional verification
- * through a `code` parameter.
- */
+
 @CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/api/careers")
@@ -39,28 +29,20 @@ public class CareerController {
     private DeveloperService developerService;
     @Autowired
     private CloudDeveloperService cloudDeveloperService;
-    
-    /**
-    *Post Mapping request for the Intern  role
-    */
 
     @PostMapping("/apply")
     public ResponseEntity<?> applyOrVerifyCareer(
             @ModelAttribute CareerApplicationRequest request,
             @RequestParam(value = "resume", required = false) MultipartFile resumeFile,
             @RequestParam(value = "code", required = false) String code) {
-      // If a verification code is present, verify the application
+
         if (code != null && !code.isEmpty()) {
             return careerService.verifyApplication(request.getEmail(), code);
         } else {
-     // Otherwise, proceed with submitting the application
             return careerService.submitApplication(request, resumeFile);
         }
     }
     
-    /**
-     *Post Mapping Request For The Developer role
-     */
     @PostMapping("/applydeveloper")
     public ResponseEntity<?> applyOrVerifyDeveloper(
             @RequestParam(value = "role", required = false) String role,
@@ -82,13 +64,12 @@ public class CareerController {
     ) {
         DeveloperRequest request = new DeveloperRequest(role, firstName, lastName, email, phone,
                 qualification, passoutYear, internship, domain,devdomain, companyName, salary, duration, resume, code,gender);
-        // Handle submission 
         return developerService.handleDeveloperApplication(request);
     }
     
 
  // Unified endpoint for experienced Cloud Developers
-    @PostMapping("/applyclouddeveloper")
+    @PostMapping("/applyclouddevelopers")
     public ResponseEntity<?> applyOrVerifyCloudDeveloper(
             @RequestParam(value = "role", required = false) String role,
             @RequestParam(value = "firstName", required = false) String firstName,
@@ -110,14 +91,12 @@ public class CareerController {
             @RequestParam(value = "gender", required = false) String gender
             
     ) {
-    	// Build the CloudDeveloperRequest object from incoming parameters
         CloudDeveloperRequest request = new CloudDeveloperRequest(
                 role, firstName, lastName, email, phone,
                 qualification, experienceYears, domain,
                 companyName, currentSalary, expectedSalary, durationAtCompany, resume,
                 linkedinProfile, githubProfile, code ,gender
         );
-        // Handle submissions
         return cloudDeveloperService.handleCloudDeveloperApplication(request);
     }
     
