@@ -212,6 +212,7 @@ public class CloudDeveloperService {
         app.setLinkedinProfile(req.getLinkedinProfile());
         app.setGithubProfile(req.getGithubProfile());
         app.setGender(req.getGender());
+        
         return app;
     }
 }
